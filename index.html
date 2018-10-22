@@ -20,8 +20,21 @@
 		height: 50px;
 		background-color: blue;
 		margin: 3px;
-		/*position: relative;*/
-
+		position: absolute;
+	}
+	#carre1 {
+		left: 10px;
+		background-color: green;
+		z-index: 20;
+	}
+	#carre2 {
+		left: 65px;
+	}
+	#carre3 {
+		left: 120px;
+	}
+	#carre4 {
+		left: 175px;
 	}
 	#conteneurship > div {
 		width: 50px;
@@ -34,7 +47,7 @@
 <body>
 	<div id="conteneurgeneral">
 		<div id="conteneuraliens">
-			<div id="carre1"></div>
+			<div id="carre1" style="background-color: green"></div>
 			<div id="carre2"></div>
 			<div id="carre3"></div>
 			<div id="carre4"></div>
@@ -43,7 +56,64 @@
 		<div id="conteneurship">
 			<div id="hero"></div>
 		</div>
+		<button id="boutonUn" style="height: 30px"></button>
 	</div>
-	<script type="text/javascript" src="javAleth.js"></script>
+	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
+	<script type="text/javascript">
+		
+		let carreUn = document.getElementById('conteneuraliens');
+
+		carreUn.style.left =  '0px';
+
+		carreUn.style.top = '0px';
+
+		var sens = 0;
+		function MoveRightTheAliens() {
+		let carreUnTop = parseInt(carreUn.style.top);
+		let carreUnLeft = parseInt(carreUn.style.left);
+		if(carreUn.style.left >= '900px') {
+			sens = 1;
+			carreUn.style.top = (parseInt(carreUnTop) + 50 + "px");
+
+		}
+		else if (carreUn.style.left <= '0px')
+		{
+			sens = 0;
+			carreUn.style.top = (parseInt(carreUnTop) + 50 + "px");
+		}
+			// carreUn = carreUn.style.backgroundColor = "red";
+			if (sens == 0) {
+			carreUn.style.left = (parseInt(carreUnLeft) + 122 + "px");
+		console.log(carreUnLeft);
+		} else {
+			carreUn.style.left = parseInt(carreUnLeft) - 122 + "px";
+		}
+	}
+	setInterval(MoveRightTheAliens, 500);
+
+		
+
+
+		
+		
+
+// }
+
+// 	let carreUn = document.getElementById('carre1');
+// 		carreUn.style.left =' 0px';
+
+// 		function MoveRightTheAliens() {
+// 		let carreUnLeft = parseInt(carreUn.style.left);
+// 			// carreUn = carreUn.style.backgroundColor = "red";
+// 			if (carreUn.style.left < '900px') {
+// 			carreUn.style.left = parseInt(carreUnLeft) + 150 + "px";
+// 		console.log(carreUnLeft);
+// 		} else if (carreUn.style.left == '0px' ) {
+// 			carreUn.style.left = parseInt(carreUnLeft) - 150 + "px";
+// 		}
+// }
+		// var MoveIntervalRight = setInterval(MoveRightTheAliens, 1000);
+		
+	</script>
 </body>
 </html>
