@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Space Invaders : the game</title>
+	<link rel="stylesheet" type="text/css" href="">
+	
+
+	<style type="text/css">
+	body {
+		height: 1000px;
+	}
+	#conteneuraliens {
+		display: flex;
+		flex-direction: row;
+		
+	}
+	#conteneuraliens > div {
+		width: 50px;
+		height: 50px;
+		background-color: blue;
+		margin: 3px;
+		/*position: relative;*/
+
+	}
+	#conteneurship > div {
+		width: 50px;
+		height: 50px;
+		background-color: pink;
+		margin: 100px 3px 3px 3px;
+	}
+	</style>
+</head>
+<body>
+	<div id="conteneurgeneral">
+		<div id="conteneuraliens">
+			<div id="carre1"></div>
+			<div id="carre2"></div>
+			<div id="carre3"></div>
+			<div id="carre4"></div>
+			<div id="carre5"></div>
+		</div>
+		<div id="conteneurship">
+			<div id="hero"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="javAleth.js"></script>
+</body>
+</html>
