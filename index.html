@@ -24,7 +24,7 @@
 		position: absolute;
 	}
 	#carre1 {
-		left: 10px;
+		left: 0px;
 		background-color: green;
 		z-index: 20;
 	}
@@ -36,6 +36,9 @@
 	}
 	#carre4 {
 		left: 175px;
+	}
+	#carre5 {
+		left: 250px;
 	}
 	#conteneurship > div {
 		width: 50px;
@@ -61,13 +64,15 @@
 	</div>
 	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
 	<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function (){ 
+
 		let carreDeux = document.getElementById('carre2');
 		let carreUn = document.getElementById('carre1');
 		let carreTrois = document.getElementById('carre3');
 		let carreQuatre = document.getElementById('carre4');
 		let carreCinq = document.getElementById('carre5');
 		let conteneurAlien = document.getElementById('conteneuraliens');
-		let heroShip = document.getElementById('hero');
+
 		// carreUn.style.left =  '0px';
 		// carreDeux.style.left = '55px';
 		// carreTrois.style.left = '110px';
@@ -104,8 +109,8 @@
 		}
 	}
 	setInterval(MoveRightTheAliens, 2000);
-
-heroShip.style.top = '750px';
+		let heroShip = document.getElementById('hero');
+heroShip.style.top = '650px';
 heroShip.style.left = '500px';
 
 		function moveTheHero(event){
@@ -118,9 +123,30 @@ if (event.code == 'ArrowRight'){
 		}
 		document.addEventListener('keydown', moveTheHero);
 
+function tirDeMissile(event) {
+	if (event.code == 'Space') {
+		var missiles = document.createElement('div');
+		missiles.id = 'divDesMissiles';
+missiles.style.width= '10px';
+missiles.style.height= '10px';
+missiles.style.backgroundColor = 'black';
+missiles.style.position = 'absolute';
+missiles.style.top= '650px';
+missiles.style.left= '500px';
 
-		var missiles = document.createElement("div")
+
+		document.body.appendChild(missiles);
+
+	}
+
+}
 		
+document.addEventListener('keydown', tirDeMissile);
+
+	
+	var missiles = 0;
+	missiles.style.top= '650px';
+	setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
 
 	// var sens = 0;
 	// 	function MoveRightTheAliens() {
@@ -144,7 +170,7 @@ if (event.code == 'ArrowRight'){
 	// 		carreUn.style.left = parseInt(carreUnLeft) - 122 + "px";
 	// 	}
 	// }
-		
+		})
 	</script>
 </body>
 </html>
