@@ -10,11 +10,11 @@
 	body {
 		
 		border: solid;
-		max-width: 1000px;
+		/*max-width: 1000px;*/
 		height: 700px;
 	   /* margin: 0;
 	    padding: 0;*/
-	    overflow: hidden; /*pour ne pas sortir du cadre. no scroll*/
+	    /*overflow: hidden;*/ /*pour ne pas sortir du cadre. no scroll*/
 	}
 	#conteneuraliens {
 		display: flex;
@@ -96,7 +96,7 @@
 		function MoveRightTheAliens() {
 			let carreUnTop = parseInt(conteneurAlien.style.top);
 			let carreUnLeft = parseInt(conteneurAlien.style.left);
-			if(conteneurAlien.style.left >= '1000px') {
+			if(conteneurAlien.style.left >= '900px') {
 				sens = 1;
 				conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
 
@@ -115,6 +115,7 @@
 			}
 		}
 		setInterval(MoveRightTheAliens, 2000);
+		
 		let heroShip = document.getElementById('hero');
 		heroShip.style.top = '650px';
 		heroShip.style.left = '500px';
@@ -138,7 +139,7 @@
 				missiles.style.backgroundColor = 'black';
 				missiles.style.position = 'absolute';
 				missiles.style.top= '650px';
-				missiles.style.left= '500px';
+				missiles.style.left= heroShip.style.left;
 
 				conteneurship.appendChild(missiles);
 
@@ -148,9 +149,9 @@
 		
 		document.addEventListener('keydown', tirDeMissile);
 
-		var missiles = 0;
-		missiles.style.top= '650px';
-		setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
+		// var missiles = 0;
+		// missiles.style.top= '650px';
+		// setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
 
 	
 })
