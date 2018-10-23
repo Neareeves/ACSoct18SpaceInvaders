@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Space Invaders : the game</title>
+	<link rel="stylesheet" type="text/css" href="">
+	<link rel="shortcut icon" href="logospace.png">
+
+	<style type="text/css">
+	body {
+		
+		/*max-width: 1000px;*/
+		/*height: 700px;*/
+	   /* margin: 0;
+	    padding: 0;*/
+	    /*overflow: hidden;*/ /*pour ne pas sortir du cadre. no scroll*/
+
+	}
+	#conteneurgeneral {
+		border: solid;
+		 background-color: rgba(29, 52, 43, 0.82);
+		 height: 700px;
+		 width: 1010px;
+	}
+/*	#conteneuraliens {
+		display: flex;
+		flex-direction: row;
+		
+	}*/
+	#conteneuraliens > div {
+		width: 50px;
+		height: 50px;
+		background-color: blue;
+		/*margin: 3px;*/
+		position: absolute;
+	}
+	#carre1 {
+		left: 0px;
+		background-color: green;
+		z-index: 20;
+	}
+	#carre2 {
+		left: 55px;
+	}
+	#carre3 {
+		left: 110px;
+	}
+	#carre4 {
+		left: 165px;
+	}
+	#carre5 {
+		left: 220px;
+	}
+	#carre6 {
+		top: 55px;
+		left: 0px;
+	}
+	#carre7 {
+		left: 55px;
+		top: 55px;
+	}
+	#carre8 {
+		left: 110px;
+		top: 55px;
+	}
+	#carre9 {
+		left: 165px;
+		top: 55px;
+	}
+	#carre10 {
+		left: 220px;
+		top: 55px;
+	}
+		#carre11 {
+		top: 110px;
+		left: 0px;
+	}
+	#carre12 {
+		left: 55px;
+		top: 110px;
+	}
+	#carre13 {
+		left: 110px;
+		top: 110px;
+	}
+	#carre14 {
+		left: 165px;
+		top: 110px;
+	}
+	#carre15 {
+		left: 220px;
+		top: 110px;
+	}
+	#carre16 {
+		left: 55px;
+		top: 165px;
+	}#carre17 {
+		left: 110px;
+		top: 165px;
+	}#carre18 {
+		left: 165px;
+		top: 165px;
+	}#carre19 {
+		left: 220px;
+		top: 165px;
+	}#carre20 {
+		left: 0px;
+		top: 165px;
+	}
+	#conteneurship > div {
+		width: 50px;
+		height: 50px;
+		background-color: pink;
+		/*margin: 100px 3px 3px 3px;*/
+	}
+</style>
+</head>
+<body>
+	<div id="conteneurgeneral">
+		<div id="conteneuraliens" style="position: absolute">
+			<div id="carre1" style="background-color: green; position: absolute"></div>
+			<div id="carre2" style="position: absolute"></div>
+			<div id="carre3"></div>
+			<div id="carre4"></div>
+			<div id="carre5"></div>
+			<div id="carre6"></div>
+			<div id="carre7"></div>
+			<div id="carre8"></div>
+			<div id="carre9"></div>
+			<div id="carre10"></div>
+			<div id="carre11"></div>
+			<div id="carre12"></div>
+			<div id="carre13"></div>
+			<div id="carre14"></div>
+			<div id="carre15"></div>
+			<div id="carre16"></div>
+			<div id="carre17"></div>
+			<div id="carre18"></div>
+			<div id="carre19"></div>
+			<div id="carre20"></div>
+
+
+		</div>
+		<div id="conteneurship">
+			<div id="hero" style="position: absolute"></div>
+		</div>
+		<button id="boutonUn" style="height: 30px"></button>
+	</div>
+	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
+	<script type="text/javascript">
+
+		document.addEventListener('DOMContentLoaded', function (){ 
+
+			let carreDeux = document.getElementById('carre2');
+			let carreUn = document.getElementById('carre1');
+			let carreTrois = document.getElementById('carre3');
+			let carreQuatre = document.getElementById('carre4');
+			let carreCinq = document.getElementById('carre5');
+			let conteneurAlien = document.getElementById('conteneuraliens');
+			let conteneurGeneral = document.getElementById('conteneurgeneral');
+			let conteneurShip = document.getElementById('conteneurship');
+		// carreUn.style.left =  '0px';
+		// carreDeux.style.left = '55px';
+		// carreTrois.style.left = '110px';
+		// carreQuatre.style.left = '165px';
+		// carreCinq.style.left = '230px';
+		conteneurAlien.style.left = '10px';
+
+		conteneurAlien.style.top = '10px';
+		// carreUn.style.top =  '0px';
+		// carreDeux.style.top = '0px';
+		// carreTrois.style.top = '0px';
+		// carreQuatre.style.top = '0px';
+		// carreCinq.style.top = '0px';
+
+/******************** balancier gauche-droite *********************/
+
+		var sens = 0;
+		var descend = 0
+		function MoveRightTheAliens() {
+// var timeoutGoRight = setInterval("conteneurAlien.style.left = parseInt(carreUnLeft) + 122 + 'px'", 1000);
+// var timeoutGoLeft = setTimeout("conteneurAlien.style.left = parseInt(carreUnLeft) - 122 + 'px'", 1000);
+			let carreUnTop = parseInt(conteneurAlien.style.top);
+			let carreUnLeft = parseInt(conteneurAlien.style.left);
+			
+	
+			// carreUn = conteneurAlien.style.backgroundColor = "red";
+			if (sens == 0) {
+				// conteneurAlien.style.left = timeoutGoRight;
+				var nextMoveUn = parseInt(carreUnLeft) + 50;
+				
+				if (nextMoveUn >= 800) {
+					sens = 1; 
+					conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+				} else {
+					conteneurAlien.style.left = nextMoveUn + "px";
+				}
+			} else if (sens ==1) {
+				var nextMoveDeux = parseInt(carreUnLeft) - 50;
+				if (nextMoveDeux <= 0) {
+					sens = 0;
+					conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+				} else {
+				conteneurAlien.style.left = parseInt(carreUnLeft) - 100 + "px";
+			}
+
+				
+			}
+			if (parseInt(conteneurAlien.style.top) > 550) {
+			alert('game over!');
+
+		}
+		}
+		setInterval(MoveRightTheAliens, 400);
+
+		let aliens = document.getElementsByClassName("aliens");
+
+
+
+
+
+
+		let heroShip = document.getElementById('hero');
+		heroShip.style.top = '650px';
+		heroShip.style.left = '500px';
+
+		function moveTheHero(event){
+
+			if (event.code == 'ArrowRight'){
+				heroShip.style.left = (parseInt(heroShip.style.left) + 60 + "px");
+			} else if (event.code == 'ArrowLeft') {
+				heroShip.style.left = parseInt(heroShip.style.left) - 60 + "px";
+			}console.log(heroShip)
+		} 
+		 
+		document.addEventListener('keydown', moveTheHero);
+
+/******             misssiles           ****************/
+let canonball;
+canonball = 0;
+
+		function tirDeMissile(event) {
+			if (event.code == 'Space') {
+				var missile = document.createElement('div');
+				missile.id = 'divDesmissiles';
+				missile.style.width= '5px';
+				missile.style.height= '18px';
+				missile.style.backgroundColor = 'black';
+				missile.style.position = 'absolute';
+				missile.style.top = '650px';
+				// missile.style.top = setInterval('parseInt(missile.style.top) - 50 + "px"', 1000);
+				missile.style.left = heroShip.style.left;
+
+				conteneurship.appendChild(missile);
+				setInterval(function() {monteeDuMissile(missile)}, 200);
+
+			}
+
+		}
+		
+		document.addEventListener('keydown', tirDeMissile);
+
+
+
+
+
+		/****** code importé *********/
+
+	
+function monteeDuMissile(quelMissile) {
+		quelMissile.style.top = parseInt(quelMissile.style.top) - 50 + "px";
+		// boucle sur chaque alien - faire remove child plutôt que display none
+		if (parseInt(quelMissile.style.top) == parseInt(conteneurAlien.style.top) && parseInt(quelMissile.style.left) == parseInt(conteneurAlien.style.left)) {
+			conteneurAlien.style.display = 'none';
+		} 
+};
+
+		
+
+});//domcontentloaded
+
+</script>
+</body>
+</html>
