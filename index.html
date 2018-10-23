@@ -8,8 +8,13 @@
 
 	<style type="text/css">
 	body {
-		height: 900px;
+		
 		border: solid;
+		max-width: 1000px;
+		height: 700px;
+	   /* margin: 0;
+	    padding: 0;*/
+	    overflow: hidden; /*pour ne pas sortir du cadre. no scroll*/
 	}
 	#conteneuraliens {
 		display: flex;
@@ -46,7 +51,7 @@
 		background-color: pink;
 		margin: 100px 3px 3px 3px;
 	}
-	</style>
+</style>
 </head>
 <body>
 	<div id="conteneurgeneral">
@@ -64,15 +69,16 @@
 	</div>
 	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
 	<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function (){ 
+		document.addEventListener('DOMContentLoaded', function (){ 
 
-		let carreDeux = document.getElementById('carre2');
-		let carreUn = document.getElementById('carre1');
-		let carreTrois = document.getElementById('carre3');
-		let carreQuatre = document.getElementById('carre4');
-		let carreCinq = document.getElementById('carre5');
-		let conteneurAlien = document.getElementById('conteneuraliens');
-
+			let carreDeux = document.getElementById('carre2');
+			let carreUn = document.getElementById('carre1');
+			let carreTrois = document.getElementById('carre3');
+			let carreQuatre = document.getElementById('carre4');
+			let carreCinq = document.getElementById('carre5');
+			let conteneurAlien = document.getElementById('conteneuraliens');
+			let conteneurGeneral = document.getElementById('conteneurgeneral');
+			let conteneurShip = document.getElementById('conteneurship');
 		// carreUn.style.left =  '0px';
 		// carreDeux.style.left = '55px';
 		// carreTrois.style.left = '110px';
@@ -88,89 +94,66 @@ document.addEventListener('DOMContentLoaded', function (){
 		// carreCinq.style.top = '0px';
 		var sens = 0;
 		function MoveRightTheAliens() {
-		let carreUnTop = parseInt(conteneurAlien.style.top);
-		let carreUnLeft = parseInt(conteneurAlien.style.left);
-		if(conteneurAlien.style.left >= '900px') {
-			sens = 1;
-			conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+			let carreUnTop = parseInt(conteneurAlien.style.top);
+			let carreUnLeft = parseInt(conteneurAlien.style.left);
+			if(conteneurAlien.style.left >= '1000px') {
+				sens = 1;
+				conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
 
-		}
-		else if (conteneurAlien.style.left <= '0px')
-		{
-			sens = 0;
-			conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
-		}
+			}
+			else if (conteneurAlien.style.left <= '0px')
+			{
+				sens = 0;
+				conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+			}
 			// carreUn = conteneurAlien.style.backgroundColor = "red";
 			if (sens == 0) {
-			conteneurAlien.style.left = (parseInt(carreUnLeft) + 122 + "px");
-		console.log(carreUnLeft);
-		} else {
-			conteneurAlien.style.left = parseInt(carreUnLeft) - 122 + "px";
+				conteneurAlien.style.left = (parseInt(carreUnLeft) + 122 + "px");
+				console.log(carreUnLeft);
+			} else {
+				conteneurAlien.style.left = parseInt(carreUnLeft) - 122 + "px";
+			}
 		}
-	}
-	setInterval(MoveRightTheAliens, 2000);
+		setInterval(MoveRightTheAliens, 2000);
 		let heroShip = document.getElementById('hero');
-heroShip.style.top = '650px';
-heroShip.style.left = '500px';
+		heroShip.style.top = '650px';
+		heroShip.style.left = '500px';
 
 		function moveTheHero(event){
 
-if (event.code == 'ArrowRight'){
-	heroShip.style.left = (parseInt(heroShip.style.left) + 122 + "px");
-} else if (event.code == 'ArrowLeft') {
-	heroShip.style.left = parseInt(heroShip.style.left) - 122 + "px";
-}console.log(heroShip)
+			if (event.code == 'ArrowRight'){
+				heroShip.style.left = (parseInt(heroShip.style.left) + 122 + "px");
+			} else if (event.code == 'ArrowLeft') {
+				heroShip.style.left = parseInt(heroShip.style.left) - 122 + "px";
+			}console.log(heroShip)
 		}
 		document.addEventListener('keydown', moveTheHero);
 
-function tirDeMissile(event) {
-	if (event.code == 'Space') {
-		var missiles = document.createElement('div');
-		missiles.id = 'divDesMissiles';
-missiles.style.width= '10px';
-missiles.style.height= '10px';
-missiles.style.backgroundColor = 'black';
-missiles.style.position = 'absolute';
-missiles.style.top= '650px';
-missiles.style.left= '500px';
+		function tirDeMissile(event) {
+			if (event.code == 'Space') {
+				var missiles = document.createElement('div');
+				missiles.id = 'divDesMissiles';
+				missiles.style.width= '10px';
+				missiles.style.height= '10px';
+				missiles.style.backgroundColor = 'black';
+				missiles.style.position = 'absolute';
+				missiles.style.top= '650px';
+				missiles.style.left= '500px';
 
+				conteneurship.appendChild(missiles);
 
-		document.body.appendChild(missiles);
+			}
 
-	}
-
-}
+		}
 		
-document.addEventListener('keydown', tirDeMissile);
+		document.addEventListener('keydown', tirDeMissile);
+
+		var missiles = 0;
+		missiles.style.top= '650px';
+		setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
 
 	
-	var missiles = 0;
-	missiles.style.top= '650px';
-	setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
-
-	// var sens = 0;
-	// 	function MoveRightTheAliens() {
-	// 	let carreUnTop = parseInt(carreUn.style.top);
-	// 	let carreUnLeft = parseInt(carreUn.style.left);
-	// 	if(carreUn.style.left >= '900px') {
-	// 		sens = 1;
-	// 		carreUn.style.top = (parseInt(carreUnTop) + 50 + "px");
-
-	// 	}
-	// 	else if (carreUn.style.left <= '0px')
-	// 	{
-	// 		sens = 0;
-	// 		carreUn.style.top = (parseInt(carreUnTop) + 50 + "px");
-	// 	}
-	// 		// carreUn = carreUn.style.backgroundColor = "red";
-	// 		if (sens == 0) {
-	// 		carreUn.style.left = (parseInt(carreUnLeft) + 122 + "px");
-	// 	console.log(carreUnLeft);
-	// 	} else {
-	// 		carreUn.style.left = parseInt(carreUnLeft) - 122 + "px";
-	// 	}
-	// }
-		})
-	</script>
+})
+</script>
 </body>
 </html>
