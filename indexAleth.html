@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Space Invaders : the game</title>
+	<link rel="stylesheet" type="text/css" href="">
+	<link rel="shortcut icon" href="logospace.png">
+
+	<style type="text/css">
+	body {
+		
+		border: solid;
+		/*max-width: 1000px;*/
+		height: 700px;
+	   /* margin: 0;
+	    padding: 0;*/
+	    /*overflow: hidden;*/ /*pour ne pas sortir du cadre. no scroll*/
+	}
+	#conteneuraliens {
+		display: flex;
+		flex-direction: row;
+		
+	}
+	#conteneuraliens > div {
+		width: 50px;
+		height: 50px;
+		background-color: blue;
+		margin: 3px;
+		position: absolute;
+	}
+	#carre1 {
+		left: 0px;
+		background-color: green;
+		z-index: 20;
+	}
+	#carre2 {
+		left: 65px;
+	}
+	#carre3 {
+		left: 120px;
+	}
+	#carre4 {
+		left: 175px;
+	}
+	#carre5 {
+		left: 250px;
+	}
+	#conteneurship > div {
+		width: 50px;
+		height: 50px;
+		background-color: pink;
+		margin: 100px 3px 3px 3px;
+	}
+</style>
+</head>
+<body>
+	<div id="conteneurgeneral">
+		<div id="conteneuraliens" style="position: absolute">
+			<div id="carre1" style="background-color: green; position: absolute"></div>
+			<div id="carre2" style="position: absolute"></div>
+			<div id="carre3"></div>
+			<div id="carre4"></div>
+			<div id="carre5"></div>
+		</div>
+		<div id="conteneurship">
+			<div id="hero" style="position: absolute"></div>
+		</div>
+		<button id="boutonUn" style="height: 30px"></button>
+	</div>
+	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function (){ 
+
+			let carreDeux = document.getElementById('carre2');
+			let carreUn = document.getElementById('carre1');
+			let carreTrois = document.getElementById('carre3');
+			let carreQuatre = document.getElementById('carre4');
+			let carreCinq = document.getElementById('carre5');
+			let conteneurAlien = document.getElementById('conteneuraliens');
+			let conteneurGeneral = document.getElementById('conteneurgeneral');
+			let conteneurShip = document.getElementById('conteneurship');
+		// carreUn.style.left =  '0px';
+		// carreDeux.style.left = '55px';
+		// carreTrois.style.left = '110px';
+		// carreQuatre.style.left = '165px';
+		// carreCinq.style.left = '230px';
+		conteneurAlien.style.left = '0px';
+
+		conteneurAlien.style.top = '0px';
+		// carreUn.style.top =  '0px';
+		// carreDeux.style.top = '0px';
+		// carreTrois.style.top = '0px';
+		// carreQuatre.style.top = '0px';
+		// carreCinq.style.top = '0px';
+		var sens = 0;
+		function MoveRightTheAliens() {
+			let carreUnTop = parseInt(conteneurAlien.style.top);
+			let carreUnLeft = parseInt(conteneurAlien.style.left);
+			if(conteneurAlien.style.left >= '900px') {
+				sens = 1;
+				conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+
+			}
+			else if (conteneurAlien.style.left <= '0px')
+			{
+				sens = 0;
+				conteneurAlien.style.top = (parseInt(carreUnTop) + 50 + "px");
+			}
+			// carreUn = conteneurAlien.style.backgroundColor = "red";
+			if (sens == 0) {
+				conteneurAlien.style.left = (parseInt(carreUnLeft) + 122 + "px");
+				console.log(carreUnLeft);
+			} else {
+				conteneurAlien.style.left = parseInt(carreUnLeft) - 122 + "px";
+			}
+		}
+		setInterval(MoveRightTheAliens, 2000);
+
+
+		
+
+		let heroShip = document.getElementById('hero');
+		heroShip.style.top = '650px';
+		heroShip.style.left = '500px';
+
+		function moveTheHero(event){
+
+			if (event.code == 'ArrowRight'){
+				heroShip.style.left = (parseInt(heroShip.style.left) + 122 + "px");
+			} else if (event.code == 'ArrowLeft') {
+				heroShip.style.left = parseInt(heroShip.style.left) - 122 + "px";
+			}console.log(heroShip)
+		}
+		document.addEventListener('keydown', moveTheHero);
+
+		function tirDeMissile(event) {
+			if (event.code == 'Space') {
+				var missiles = document.createElement('div');
+				missiles.id = 'divDesMissiles';
+				missiles.style.width= '10px';
+				missiles.style.height= '10px';
+				missiles.style.backgroundColor = 'black';
+				missiles.style.position = 'absolute';
+				missiles.style.top= '650px';
+				missiles.style.left= '500px';
+
+				conteneurship.appendChild(missiles);
+
+			}
+
+		}
+		
+		document.addEventListener('keydown', tirDeMissile);
+
+		// var missiles = 0;
+		// missiles.style.top= '650px';
+		// setInterval(missiles.style.top = (parseInt(missiles.style.top) - 50 + "px"), 1000);
+
+	
+})
+</script>
+</body>
+</html>
