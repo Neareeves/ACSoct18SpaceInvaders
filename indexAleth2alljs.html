@@ -8,6 +8,10 @@
 	<link rel="stylesheet" type="text/css" href="">
 	<link rel="shortcut icon" href="logospacer.gif">
 	<style type="text/css">
+	@font-face {
+		font-family: 'spaceage';
+		src: url('spaceage.ttf');
+	}
 	body {
 		
 		/*max-width: 1000px;*/
@@ -23,14 +27,27 @@
 		background-size: cover;
 		height: 700px;
 		width: 1010px;
-		/* margin-left: auto;
-		margin-right: auto;*/
+		 margin-left: auto;
+		margin-right: auto;
 	}
 /*	#conteneuraliens {
 		display: flex;
 		flex-direction: row;
 		
 		}*/
+
+		h1 {
+		background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+		background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+		color:transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
+		font-size: 40px;
+		
+		text-align: center;
+		font-family: 'spaceage';
+		margin-bottom: 20px;
+	}
 		#conteneuraliens > div {
 	/*	width: 50px;
 	height: 50px;*/
@@ -59,11 +76,12 @@
 </style>
 </head>
 <body>
+	<h1>Space Invaders</h1>
 	<div id="conteneurgeneral">
-		<div id="conteneuraliens" style="position: absolute">
+		<div id="conteneuraliens" style="position: relative">
 		</div>
 		<div id="conteneurship">
-			<div id="hero" style="position: absolute"></div>
+			<div id="hero" style="position: absolute;"></div>
 		</div>
 		<button id="boutonUn" style="height: 30px"></button>
 	</div>
@@ -161,7 +179,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 				heroShip.style.left = (parseInt(heroShip.style.left) + 60 + "px");
 			} else if (event.code == 'ArrowLeft') {
 				heroShip.style.left = parseInt(heroShip.style.left) - 60 + "px";
-			}console.log(heroShip)
+			}
 		} 
 
 		document.addEventListener('keydown', moveTheHero);
@@ -180,9 +198,9 @@ function tirDeMissile(event) {
 				missile.style.backgroundImage= "url(flamme.png)";
 				missile.style.backgroundSize = "cover";
 				missile.style.position = 'absolute';
-				missile.style.top = '645px';
+				missile.style.top = '628px';
 				// missile.style.top = setInterval('parseInt(missile.style.top) - 50 + "px"', 1000);
-				missile.style.left = parseInt(heroShip.style.left) + 54 + 'px';;
+				missile.style.left = parseInt(heroShip.style.left) + 40 + 'px';;
 
 				conteneurship.appendChild(missile);
 				setInterval(function() {monteeDuMissile(missile)}, 200);
