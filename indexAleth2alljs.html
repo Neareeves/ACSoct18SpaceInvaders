@@ -15,10 +15,7 @@
 	body {
 		background-color: rgba(11, 41, 102, 0.62);
 		z-index: -1;
-		/*max-width: 1000px;*/
-		/*height: 700px;*/
-	   /* margin: 0;
-	   padding: 0;*/
+		
 	   overflow: hidden; /*pour ne pas sortir du cadre. no scroll*/
 
 	}
@@ -148,12 +145,12 @@ aliens.style.backgroundImage = 'url(vador.gif)';
 				aliens.style.height = '35px'; 
 		aliens.style.width ='22px';
 }else if (i == 3) {
-aliens.style.backgroundImage = 'url(logospace.gif)';
+aliens.style.backgroundImage = 'url(magictroll.gif)';
 		aliens.style.backgroundSize = 'cover';
-				aliens.style.height = '20px'; 
-		aliens.style.width ='40px';
+		aliens.style.height = '50px'; 
+		aliens.style.width ='20px';
 }else if (i == 4) {
-aliens.style.backgroundImage = 'url(testgif.gif)';
+aliens.style.backgroundImage = 'url(nana.gif)';
 		aliens.style.backgroundSize = 'cover';
 				aliens.style.height = '20px'; 
 		aliens.style.width ='40px';
@@ -210,7 +207,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 				// conteneurAlien.style.left = timeoutGoRight;
 				var nextMoveUn = parseInt(carreUnLeft) + 25;
 				
-				if (nextMoveUn >= 585) {
+				if (nextMoveUn >= 520) {
 					sens = 1; 
 					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
 				} else {
@@ -458,7 +455,7 @@ let petitCoeur = document.getElementById('petitscoeurs');
 			} else if (heroShip.hasExploded == 1) {
 		clearInterval(intervalRocket);
 		conteneurGeneral.removeChild(rocket);
-		
+
 		heroShip.hasExploded = 2;
 		heroShip.style.backgroundImage= 'url(Faucon3.png)';
 		heroShip.style.backgroundSize = 'cover';
@@ -472,7 +469,8 @@ let petitCoeur = document.getElementById('petitscoeurs');
 
 		
 			} else if (heroShip.hasExploded == 2) {
-	
+petitCoeur.style.backgroundImage= 'url(coeursbrises.png)';
+		petitCoeur.style.backgroundSize = 'cover';
 	conteneurGeneral.removeChild(rocket);
 	clearInterval(intervalRocket);
 	alert('Vous avez perdu! Rafraîchissez la page pour recommencer.');
