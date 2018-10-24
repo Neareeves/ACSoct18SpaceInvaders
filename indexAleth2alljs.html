@@ -6,7 +6,7 @@
 	
 	<title>Space Invaders : the game</title>
 	<link rel="stylesheet" type="text/css" href="">
-	<link rel="shortcut icon" href="logospacer.gif">
+	<link rel="shortcut icon" href="logospace.gif">
 	<style type="text/css">
 	@font-face {
 		font-family: 'spaceage';
@@ -15,10 +15,7 @@
 	body {
 		background-color: rgba(11, 41, 102, 0.62);
 		z-index: -1;
-		/*max-width: 1000px;*/
-		/*height: 700px;*/
-	   /* margin: 0;
-	   padding: 0;*/
+		
 	   overflow: hidden; /*pour ne pas sortir du cadre. no scroll*/
 
 	}
@@ -30,6 +27,7 @@
 		width: 1010px;
 		margin-left: auto;
 		margin-right: auto;
+		position: relative;
 	}
 
 
@@ -80,6 +78,14 @@
 
 
 	}
+	#petitscoeurs {
+		background-image: url('3coeurs.png');
+		background-size: cover;
+position: absolute;
+height: 100px;
+width: 200px;
+bottom: 0px;
+	}
 </style>
 </head>
 <body>
@@ -91,7 +97,7 @@
 		<div id="conteneurship">
 			<div id="hero" style="position: absolute;"></div>
 		</div>
-		
+		<div id="petitscoeurs"></div>
 	</div>
 	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
 	<script type="text/javascript">
@@ -123,19 +129,38 @@ for (let i = 0; i < rows; i++) {
 		aliens.className = 'aliens';
 		aliens.style.top = badGuySpace * i + "px";
 		aliens.style.left = badGuySpace * j + "px";
-		aliens.style.backgroundImage = 'url(logospacer.gif)';
-		aliens.style.backgroundSize = 'cover';
 		aliens.style.height = '20px'; 
 		aliens.style.width ='40px';
-
-
+if (i == 0) {
+		aliens.style.backgroundImage = 'url(logospacer.gif)';
+		aliens.style.backgroundSize = 'cover';
+} else if (i == 1) {
+aliens.style.backgroundImage = 'url(logospace.gif)';
+		aliens.style.backgroundSize = 'cover';
+				aliens.style.height = '20px'; 
+		aliens.style.width ='40px';
+}else if (i == 2) {
+aliens.style.backgroundImage = 'url(vador.gif)';
+		aliens.style.backgroundSize = 'cover';
+				aliens.style.height = '35px'; 
+		aliens.style.width ='22px';
+}else if (i == 3) {
+aliens.style.backgroundImage = 'url(magictroll.gif)';
+		aliens.style.backgroundSize = 'cover';
+		aliens.style.height = '50px'; 
+		aliens.style.width ='20px';
+}else if (i == 4) {
+aliens.style.backgroundImage = 'url(nana.gif)';
+		aliens.style.backgroundSize = 'cover';
+				aliens.style.height = '20px'; 
+		aliens.style.width ='40px';
+}
 		conteneurAlien.appendChild(aliens);
 
 
 	}
 } 
 let aliens = document.getElementsByClassName('aliens'); 
-
 
 /* création blocs de défense*/
 
@@ -155,6 +180,7 @@ for (let k = 0; k < rowsBlocs; k++) {
 		protectionBlocs.style.height = '30px';
 		protectionBlocs.style.width = '100px';
 		protectionBlocs.isDestroyed= 0;
+		protectionBlocs.isExploded=0;
 
 
 		conteneurProtection.appendChild(protectionBlocs);
@@ -181,7 +207,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 				// conteneurAlien.style.left = timeoutGoRight;
 				var nextMoveUn = parseInt(carreUnLeft) + 25;
 				
-				if (nextMoveUn >= 585) {
+				if (nextMoveUn >= 520) {
 					sens = 1; 
 					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
 				} else {
@@ -203,7 +229,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 
 			}
 		}
-		setInterval(MoveRightTheAliens, 200);
+		setInterval(MoveRightTheAliens, 500);
 
 
 
@@ -214,6 +240,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 		let heroShip = document.getElementById('hero');
 		heroShip.style.top = '650px';
 		heroShip.style.left = '500px';
+		heroShip.hasExploded = 0;
 
 		function moveTheHero(event){
 
@@ -258,7 +285,7 @@ function tirDeMissile(event) {
 // 		/****** code importé *********/
 
 
-function monteeDuMissile(quelMissile,intervalMissile) {
+function monteeDuMissile(quelMissile, intervalMissile) {
 	
 	
 	quelMissile.style.top = parseInt(quelMissile.style.top) - 25 + "px";
@@ -277,6 +304,7 @@ function monteeDuMissile(quelMissile,intervalMissile) {
 		aliens[i].width = parseInt(aliens[i].style.width);
 /*		console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
 console.log(aliens[i].y,aliens[i].x,aliens[i].height,aliens[i].width,"aliens");*/
+
 if (isCollide(quelMissile, aliens[i])) {
 	conteneurship.removeChild(quelMissile);
 	conteneurAlien.removeChild(aliens[i]);
@@ -307,8 +335,7 @@ for (var i = 0; i < protectionBlocs.length; i++) {
 	protectionBlocs[i].width = parseInt(protectionBlocs[i].style.width);
 
 
-// console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
-// console.log(protectionBlocs[i].y,protectionBlocs[i].x,protectionBlocs[i].height,protectionBlocs[i].width,"bloc");
+
 if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
 
 	if (protectionBlocs[i].isDestroyed == 0){
@@ -325,7 +352,7 @@ if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
 		protectionBlocs[i].style.backgroundSize = 'cover';
 		conteneurship.removeChild(quelMissile);
 		clearInterval(intervalMissile);
-		console.log(protectionBlocs[i].isDestroyed);
+		
 		
 	} else	if (protectionBlocs[i].isDestroyed == 2) {
 		protectionBlocs[i].isDestroyed = 3;
@@ -333,16 +360,18 @@ if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
 		protectionBlocs[i].style.backgroundSize = 'cover';
 		conteneurship.removeChild(quelMissile);
 		clearInterval(intervalMissile);
-		console.log(protectionBlocs[i].isDestroyed);
+		
 
 	}else	if (protectionBlocs[i].isDestroyed == 3) {
-		conteneurProtection.removeChild(protectionBlocs[i]);}
+		conteneurProtection.removeChild(protectionBlocs[i]);
 		conteneurship.removeChild(quelMissile);
-		clearInterval(intervalMissile);
+		clearInterval(intervalMissile);}
 
 
 
 }
+
+
 }
 function isCollideBlocs(a, b) {
 	return !(
@@ -365,7 +394,140 @@ function isCollide(a, b) {
 		);
 }
 
+/******************************* tirs aliens ************************************/
 
+		
+  
+ setInterval(function() {
+let rocket = document.createElement('div');
+ 		rocket.className = 'classDeRocket';
+		rocket.style.width= '20px';
+		rocket.style.height= '28px';
+		// rocket.style.backgroundColor = 'black';
+		rocket.style.backgroundImage= "url(bombe2.png)";
+		rocket.style.backgroundSize = "cover";
+		rocket.style.position = 'absolute';
+		let randomNumber =  Math.floor(Math.random() * 50);
+		rocket.style.left = parseInt(aliens[randomNumber].style.left) + parseInt(conteneuraliens.style.left) + "px";
+		rocket.style.top = parseInt(aliens[randomNumber].style.top) + parseInt(conteneuraliens.style.top) + "px";
+
+		conteneurGeneral.appendChild(rocket);
+		let intervalRocket = setInterval(function() {moveTheRocket(rocket, intervalRocket)}, 150);
+
+			// rocketAliens = getElementsByClassName('classDeRocket');
+}, 2000);
+function moveTheRocket(rocket, intervalRocket) {
+	rocket.style.top = parseInt(rocket.style.top) + 20 +"px";
+
+	rocket.y = parseInt(rocket.style.top);
+	rocket.height = parseInt(rocket.style.height) ;
+	rocket.x = parseInt(rocket.style.left);
+	rocket.width = parseInt(rocket.style.width) ;
+
+// let heroShip = document.getElementById('hero');
+// 		heroShip.style.top = '650px';
+// 		heroShip.style.left = '500px';
+let petitCoeur = document.getElementById('petitscoeurs');
+
+		heroShip.x =  parseInt(heroShip.style.left);
+		heroShip.y =  parseInt(heroShip.style.top) - 60;
+		heroShip.height = parseInt(heroShip.style.height);
+		heroShip.width = parseInt(heroShip.style.width);
+	
+
+		if (isCollide(rocket, heroShip)) {
+			if (heroShip.hasExploded == 0) {
+
+		heroShip.hasExploded = 1;
+		clearInterval(intervalRocket);
+		conteneurGeneral.removeChild(rocket);
+
+		petitCoeur.style.backgroundImage= 'url(2coeurs.png)';
+		petitCoeur.style.backgroundSize = 'cover';
+		
+		petitCoeur.style.width= '100px';
+		petitCoeur.style.height = '35px';
+		petitCoeur.style.bottom = '0px';
+
+		heroShip.style.backgroundImage= 'url(Faucon2.png)';
+		heroShip.style.backgroundSize = 'cover';
+
+			} else if (heroShip.hasExploded == 1) {
+		clearInterval(intervalRocket);
+		conteneurGeneral.removeChild(rocket);
+
+		heroShip.hasExploded = 2;
+		heroShip.style.backgroundImage= 'url(Faucon3.png)';
+		heroShip.style.backgroundSize = 'cover';
+
+
+		petitCoeur.style.backgroundImage= 'url(coeurs.png)';
+		petitCoeur.style.backgroundSize = 'cover';
+		petitCoeur.style.width= '60px';
+		petitCoeur.style.height = '40px';
+		petitCoeur.style.bottom = '0px';	
+
+		
+			} else if (heroShip.hasExploded == 2) {
+petitCoeur.style.backgroundImage= 'url(coeursbrises.png)';
+		petitCoeur.style.backgroundSize = 'cover';
+	conteneurGeneral.removeChild(rocket);
+	clearInterval(intervalRocket);
+	alert('Vous avez perdu! Rafraîchissez la page pour recommencer.');
+			}
+}
+
+	for (var i = 0; i < protectionBlocs.length; i++) {
+	protectionBlocs[i].x = parseInt(protectionBlocs[i].style.left) ;
+	protectionBlocs[i].y = parseInt(protectionBlocs[i].style.top);
+	protectionBlocs[i].height = parseInt(protectionBlocs[i].style.height);
+	protectionBlocs[i].width = parseInt(protectionBlocs[i].style.width);
+
+
+if (isCollideBlocs(rocket, protectionBlocs[i])) {
+
+	if (protectionBlocs[i].isDestroyed == 0){
+
+		protectionBlocs[i].isDestroyed = 1;
+		protectionBlocs[i].style.backgroundImage= 'url(protectionbroken.png)';
+		protectionBlocs[i].style.backgroundSize = 'cover';
+		conteneurGeneral.removeChild(rocket);
+		clearInterval(intervalRocket);
+		
+	} else	if (protectionBlocs[i].isDestroyed == 1) {
+		protectionBlocs[i].isDestroyed = 2;
+		protectionBlocs[i].style.backgroundImage= 'url(protectionbroken1.png)';
+		protectionBlocs[i].style.backgroundSize = 'cover';
+		conteneurGeneral.removeChild(rocket);
+		clearInterval(intervalRocket);
+		
+		
+	} else	if (protectionBlocs[i].isDestroyed == 2) {
+		protectionBlocs[i].isDestroyed = 3;
+		protectionBlocs[i].style.backgroundImage= 'url(protectionbroken2.png)';
+		protectionBlocs[i].style.backgroundSize = 'cover';
+		conteneurGeneral.removeChild(rocket);
+		clearInterval(intervalRocket);
+		
+
+	} else	if (protectionBlocs[i].isDestroyed == 3) {
+		conteneurProtection.removeChild(protectionBlocs[i]);
+		conteneurGeneral.removeChild(rocket);
+		clearInterval(intervalRocket);
+	}
+}
+
+
+}
+function isCollideBlocs(a, b) {
+	return !(
+		((a.y + a.height) < (b.y)) ||
+		(a.y > (b.y + b.height)) ||
+		((a.x + a.width) < b.x) ||
+		(a.x > (b.x + b.width))
+		);
+}
+}
 
 });//domcontentloaded
 
