@@ -273,7 +273,28 @@ function monteeDuMissile(quelMissile) {
 		if (parseInt(quelMissile.style.top) == parseInt(conteneurAlien.style.top) && parseInt(quelMissile.style.left) == parseInt(conteneurAlien.style.left)) {
 			conteneurAlien.style.display = 'none';
 		} 
+		if (checkCollision (missile,conteneurAlien)) {
+		quelMissile.clearInterval ("missile");
+		quelMissile.display ="none";
+		}
+	}
+
+ function checkCollision (a,b) {
+    return ! ((a.top + a.height < b.top +b.top ) ||
+     (a.top + a.height > (b.top + b.height)) || 
+     ((a.left + a.width) < b.left + b.width) || (a.left + a.width > (b.left + b.width)) ); 
+
 };
+
+a.top = missile.style.top;
+a.left = missile.style.left;
+a.height = missile.style.height;
+a.width = missile.style.width;
+
+b.top = parseInt (conteneurAlien.style.top +);
+b.left = parseInt (conteneurAlien.style.left +);
+b.height = parseInt (conteneurAlien.style.height +);
+b.width = parseInt (conteneurAlien.style.width +);
 
 		
 
