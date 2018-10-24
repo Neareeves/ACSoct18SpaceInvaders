@@ -84,7 +84,7 @@
 position: absolute;
 height: 100px;
 width: 200px;
-bottom: 0px;
+bottom: -20px;
 	}
 </style>
 </head>
@@ -137,23 +137,24 @@ if (i == 0) {
 } else if (i == 1) {
 aliens.style.backgroundImage = 'url(logospace.gif)';
 		aliens.style.backgroundSize = 'cover';
-				aliens.style.height = '20px'; 
+		aliens.style.height = '20px'; 
 		aliens.style.width ='40px';
 }else if (i == 2) {
 aliens.style.backgroundImage = 'url(vador.gif)';
 		aliens.style.backgroundSize = 'cover';
-				aliens.style.height = '35px'; 
+		aliens.style.height = '35px'; 
 		aliens.style.width ='22px';
 }else if (i == 3) {
-aliens.style.backgroundImage = 'url(magictroll.gif)';
-		aliens.style.backgroundSize = 'cover';
-		aliens.style.height = '50px'; 
-		aliens.style.width ='20px';
-}else if (i == 4) {
 aliens.style.backgroundImage = 'url(nana.gif)';
 		aliens.style.backgroundSize = 'cover';
-				aliens.style.height = '20px'; 
 		aliens.style.width ='40px';
+		aliens.style.height = '25px';
+}else if (i == 4) {
+aliens.style.backgroundImage = 'url(magictroll.gif)';
+		aliens.style.backgroundSize = 'cover';
+				aliens.style.height = '20px'; 
+		aliens.style.height = '45px'; 
+		aliens.style.width ='20px';
 }
 		conteneurAlien.appendChild(aliens);
 
@@ -240,6 +241,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 		let heroShip = document.getElementById('hero');
 		heroShip.style.top = '650px';
 		heroShip.style.left = '500px';
+		heroShip.style.width = '48px';
 		heroShip.hasExploded = 0;
 
 		function moveTheHero(event){
@@ -433,7 +435,7 @@ let petitCoeur = document.getElementById('petitscoeurs');
 		heroShip.y =  parseInt(heroShip.style.top) - 60;
 		heroShip.height = parseInt(heroShip.style.height);
 		heroShip.width = parseInt(heroShip.style.width);
-	
+	console.log(heroShip.style.width);
 
 		if (isCollide(rocket, heroShip)) {
 			if (heroShip.hasExploded == 0) {
