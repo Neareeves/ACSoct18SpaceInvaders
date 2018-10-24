@@ -3,12 +3,16 @@
  */
 
 /* Links */
-.button
+.button{
+  padding: 350px;
+  text-decoration:none;
+}
 a,
 a:focus,
 a:hover {
   color: #fff;
   padding: 350px;
+  text-decoration:none;
 }
 
 /* Custom default button */
