@@ -6,7 +6,7 @@
 	
 	<title>Space Invaders : the game</title>
 	<link rel="stylesheet" type="text/css" href="">
-	<link rel="shortcut icon" href="logospacer.gif">
+	<link rel="shortcut icon" href="logospace.gif">
 	<style type="text/css">
 	@font-face {
 		font-family: 'spaceage';
@@ -81,6 +81,14 @@
 
 
 	}
+	#petitscoeurs {
+		background-image: url('3coeurs.png');
+		background-size: cover;
+position: absolute;
+height: 100px;
+width: 200px;
+bottom: 0px;
+	}
 </style>
 </head>
 <body>
@@ -92,7 +100,7 @@
 		<div id="conteneurship">
 			<div id="hero" style="position: absolute;"></div>
 		</div>
-		
+		<div id="petitscoeurs"></div>
 	</div>
 	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
 	<script type="text/javascript">
@@ -422,29 +430,52 @@ function moveTheRocket(rocket, intervalRocket) {
 // let heroShip = document.getElementById('hero');
 // 		heroShip.style.top = '650px';
 // 		heroShip.style.left = '500px';
+let petitCoeur = document.getElementById('petitscoeurs');
 
 		heroShip.x =  parseInt(heroShip.style.left);
 		heroShip.y =  parseInt(heroShip.style.top) - 60;
 		heroShip.height = parseInt(heroShip.style.height);
 		heroShip.width = parseInt(heroShip.style.width);
-		console.log(conteneurShip.style.left, "hero x");
+	
 
 		if (isCollide(rocket, heroShip)) {
 			if (heroShip.hasExploded == 0) {
 
 		heroShip.hasExploded = 1;
-		conteneurGeneral.removeChild(rocket);
 		clearInterval(intervalRocket);
+		conteneurGeneral.removeChild(rocket);
+
+		petitCoeur.style.backgroundImage= 'url(2coeurs.png)';
+		petitCoeur.style.backgroundSize = 'cover';
+		
+		petitCoeur.style.width= '100px';
+		petitCoeur.style.height = '35px';
+		petitCoeur.style.bottom = '0px';
+
+		heroShip.style.backgroundImage= 'url(Faucon2.png)';
+		heroShip.style.backgroundSize = 'cover';
+
 			} else if (heroShip.hasExploded == 1) {
-		heroShip.hasExploded = 2;
-		conteneurGeneral.removeChild(rocket);
 		clearInterval(intervalRocket);
-		alert('deuxième choc');
+		conteneurGeneral.removeChild(rocket);
+		
+		heroShip.hasExploded = 2;
+		heroShip.style.backgroundImage= 'url(Faucon3.png)';
+		heroShip.style.backgroundSize = 'cover';
+
+
+		petitCoeur.style.backgroundImage= 'url(coeurs.png)';
+		petitCoeur.style.backgroundSize = 'cover';
+		petitCoeur.style.width= '60px';
+		petitCoeur.style.height = '40px';
+		petitCoeur.style.bottom = '0px';	
+
+		
 			} else if (heroShip.hasExploded == 2) {
-	conteneurship.removeChild(heroShip);
+	
 	conteneurGeneral.removeChild(rocket);
 	clearInterval(intervalRocket);
-
+	alert('Vous avez perdu! Rafraîchissez la page pour recommencer.');
 			}
 }
 
