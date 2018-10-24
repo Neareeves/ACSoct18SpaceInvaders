@@ -27,7 +27,7 @@
 		background-size: cover;
 		height: 650px;
 		width: 1010px;
-		 margin-left: auto;
+		margin-left: auto;
 		margin-right: auto;
 	}
 /*	#conteneuraliens {
@@ -37,17 +37,17 @@
 		}*/
 
 		h1 {
-		background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
-		background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
-		color:transparent;
-		-webkit-background-clip: text;
-		background-clip: text;
-		font-size: 40px;
-		
-		text-align: center;
-		font-family: 'spaceage';
-		margin-bottom: 20px;
-	}
+			background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			color:transparent;
+			-webkit-background-clip: text;
+			background-clip: text;
+			font-size: 40px;
+
+			text-align: center;
+			font-family: 'spaceage';
+			margin-bottom: 20px;
+		}
 		#conteneuraliens > div {
 	/*	width: 50px;
 	height: 50px;*/
@@ -58,13 +58,16 @@
 	/*background-size: cover;*/
 
 }
-
+#conteneurship {
+	position: relative;
+	top : -50px;
+}
 #conteneurship > div {
 	width: 100px;
 	height: 50px;
-		background-image: url(hero.png);
+	background-image: url(hero.png);
 	background-size: cover;
-
+	position: relative;
 	z-index: 20;
 	/*margin: 100px 3px 3px 3px;*/
 }
@@ -73,13 +76,13 @@
 	height: 20px;
 	/*background-color: blue;*/
 }
-.protectionBlocsClass * {
+.protectionBlocsClass {
 	width: 100px;
 	height: 50px;
 	position: absolute;
-	top: 300px;
+	top: 200px;
 }
-.conteneurprotection {
+#conteneurprotection { 
 	position: relative;
 	/*top: 600px;*/
 
@@ -96,10 +99,11 @@
 		<div id="conteneurship">
 			<div id="hero" style="position: absolute;"></div>
 		</div>
-		<button id="boutonUn" style="height: 30px"></button>
+		
 	</div>
 	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
 	<script type="text/javascript">
+
 
 		document.addEventListener('DOMContentLoaded', function (){ 
 
@@ -129,6 +133,8 @@ for (let i = 0; i < rows; i++) {
 		aliens.style.left = badGuySpace * j + "px";
 		aliens.style.backgroundImage = 'url(logospacer.gif)';
 		aliens.style.backgroundSize = 'cover';
+		aliens.style.height = '20px'; 
+		aliens.style.width ='40px';
 
 
 		conteneurAlien.appendChild(aliens);
@@ -154,6 +160,9 @@ for (let k = 0; k < rowsBlocs; k++) {
 		protectionBlocs.style.left = protectionBlocsSpace * l + 180 + "px";
 		protectionBlocs.style.backgroundImage = 'url(protectionintacte.png)';
 		protectionBlocs.style.backgroundSize = 'cover';
+		protectionBlocs.style.height = '50px';
+		protectionBlocs.style.width = '100px';
+		protectionBlocs.isDestroyed= 0;
 
 
 		conteneurProtection.appendChild(protectionBlocs);
@@ -202,7 +211,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 
 			}
 		}
-		setInterval(MoveRightTheAliens, 500);
+		setInterval(MoveRightTheAliens, 200);
 
 
 
@@ -226,7 +235,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 		document.addEventListener('keydown', moveTheHero);
 
 // /******             misssiles           ****************/
-
+var intervalMissile;
 
 function tirDeMissile(event) {
 	if (event.code == 'Space') {
@@ -243,7 +252,7 @@ function tirDeMissile(event) {
 				missile.style.left = parseInt(heroShip.style.left) + 40 + 'px';;
 
 				conteneurship.appendChild(missile);
-				setInterval(function() {monteeDuMissile(missile)}, 200);
+				intervalMissile = setInterval(function() {monteeDuMissile(missile)}, 250);
 
 			}
 
@@ -254,85 +263,101 @@ function tirDeMissile(event) {
 
 
 
-
 // 		/****** code importé *********/
 
 
 function monteeDuMissile(quelMissile) {
 	
-	quelMissile.style.top = parseInt(quelMissile.style.top) - 50 + "px";
-		
+	
+	quelMissile.style.top = parseInt(quelMissile.style.top) - 25 + "px";
 
-	quelMissile.y = quelMissile.style.top;
-	quelMissile.height = quelMissile.style.height ;
-	quelMissile.x = quelMissile.style.left;
-	quelMissile.width = quelMissile.style.width ;
 
-	for (var i = 0; i < protectionBlocs.length; i++) {
-		protectionBlocs.length = i;
+	quelMissile.y = parseInt(quelMissile.style.top);
+	quelMissile.height = parseInt(quelMissile.style.height) ;
+	quelMissile.x = parseInt(quelMissile.style.left);
+	quelMissile.width = parseInt(quelMissile.style.width) ;
+
+
+	for (var i = 0; i < aliens.length; i++) {
+		aliens[i].x = parseInt(conteneurAlien.style.left) + parseInt(aliens[i].style.left);
+		aliens[i].y = parseInt(conteneurAlien.style.top) + parseInt(aliens[i].style.top) - 10;
+		aliens[i].height = parseInt(aliens[i].style.height);
+		aliens[i].width = parseInt(aliens[i].style.width);
+/*		console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
+console.log(aliens[i].y,aliens[i].x,aliens[i].height,aliens[i].width,"aliens");*/
+if (isCollide(quelMissile, aliens[i])) {
+	conteneurship.removeChild(quelMissile);
+ 	conteneurAlien.removeChild(aliens[i]);
+	clearInterval(intervalMissile);
+}  
+
+}
+/* pop up end of game - success */
+
+if (aliens.length == 0) {
+// let buttonYouWon = document.createElement("button");
+var txt ;
+	var endOfGame = confirm('Bravo! Vous avez gagné');
+	if (endOfGame == true) {
+txt = "Do you want to try again?"
+	} else {
+		txt = "That's enough!"
 	}
- 	protectionBlocs[0].x = parseInt(conteneurAlien.style.left) + parseInt(protectionBlocs[0].style.left);
-	protectionBlocs[0].y = parseInt(conteneurAlien.style.top) + parseInt(protectionBlocs[0].style.top);
-	protectionBlocs[0].height = protectionBlocs[0].style.height;
-	protectionBlocs[0].width = protectionBlocs[0].style.width;
-// for (var i = i; i < protectionBlocs.length; i++) {
-// 	protectionBlocs[0] = protectionBlocs[0];
-// }
-	if (isCollide(quelMissile, protectionBlocs[0])) { 
+// document.body.appendChild(buttonYouWon);
 
-	var variableDestroyProtection = 0;	
-		if (variableDestroyProtection == 0){
-			variableDestroyProtection = 1;
-			protectionBlocs[0].style.backgroundImage= 'url(protectionbroken.png)';
-		protectionBlocs[0].style.backgroundSize = 'cover';
-			console.log(variableDestroyProtection);
-		} else if (variableDestroyProtection == 1) {
-			conteneurProtection.removeChild('protectionBlocs[0]');
-			console.log(variableDestroyProtection);
-		}
+}
+
+
+for (var i = 0; i < protectionBlocs.length; i++) {
+	protectionBlocs[i].x = parseInt(protectionBlocs[i].style.left) ;
+	protectionBlocs[i].y = parseInt(protectionBlocs[i].style.top) - 20;
+	protectionBlocs[i].height = parseInt(protectionBlocs[i].style.height);
+	protectionBlocs[i].width = parseInt(protectionBlocs[i].style.width);
+
+
+// console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
+// console.log(protectionBlocs[i].y,protectionBlocs[i].x,protectionBlocs[i].height,protectionBlocs[i].width,"bloc");
+if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
+
+	if (protectionBlocs[i].isDestroyed == 0){
+
+		protectionBlocs[i].isDestroyed = 1;
+		protectionBlocs[i].style.backgroundImage= 'url(protectionbroken.png)';
+		protectionBlocs[i].style.backgroundSize = 'cover';
+		conteneurship.removeChild(quelMissile);
+		clearInterval(intervalMissile);
 		
-	// 	alert("t'y est presque");
+	} else	if (protectionBlocs[i].isDestroyed == 1) {
+		conteneurProtection.removeChild(protectionBlocs[i]);
 
+		
 	}
 
-	// let aliens = document.getElementsByClassName('aliens');
-	// aliens.style.left = badGuySpace * 10 + "px";
-	// aliens.style.top = badGuySpace * 5 + "px";
-
-	// aliens[0].x = parseInt(conteneurAlien.style.left) + parseInt(aliens.style.left);
-	// aliens.y = parseInt(conteneurAlien.style.top) + parseInt(aliens.style.top);
-	// aliens.height = aliens.style.height;
-	// aliens.width = aliens.style.width;
 
 
-	// if (isCollide(quelMissile, aliens[i])) {
+}
+}
+function isCollideBlocs(a, b) {
+	return !(
+		((a.y + a.height) < (b.y)) ||
+		(a.y > (b.y + b.height)) ||
+		((a.x + a.width) < b.x) ||
+		(a.x > (b.x + b.width))
+		);
+}
 
-	// 	for (var i = i; i < alien.length; i++) {
-
-	// 		conteneurAlien.removeChild(aliens[i]);
-	// 	}
-	// }
-	// console.log(alien[i])
-		// boucle sur chaque alien - faire remove child plutôt que display none
-		
+	
 	};
 
-		function isCollide(a, b) {
-			return !(
-				((a.y + a.height) < (b.y)) ||
-				(a.y > (b.y + b.height)) ||
-				((a.x + a.width) < b.x) ||
-				(a.x > (b.x + b.width))
-				);
-		}
-// 	} 
-// 	boutonUn.addEventListener('click', boutonPlay);
-// console.log(boutonPlay);
+	function isCollide(a, b) {
+		return !(
+			((a.y + a.height) < (b.y)) ||
+			(a.y > (b.y + b.height)) ||
+			((a.x + a.width) < b.x) ||
+			(a.x > (b.x + b.width))
+			);
+	}
 
-// 		function destroyAliens() {
-// // if (parseInt(conteneurAlien.style.left) == missile.style.left && conteneurAlien.style.top == conteneurAlien.style.top)
-
-// }
 
 
 });//domcontentloaded
