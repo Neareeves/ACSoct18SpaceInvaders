@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title>Space Invaders : the game</title>
+	<link rel="stylesheet" type="text/css" href="">
+	<link rel="shortcut icon" href="logospacer.gif">
+	<style type="text/css">
+	@font-face {
+		font-family: 'spaceage';
+		src: url('spaceage.ttf');
+	}
+	body {
+		
+		/*max-width: 1000px;*/
+		/*height: 700px;*/
+	   /* margin: 0;
+	   padding: 0;*/
+	   overflow: hidden; /*pour ne pas sortir du cadre. no scroll*/
+
+	}
+	#conteneurgeneral {
+		border: solid;
+		background-image: url(starlight.gif);
+		background-size: cover;
+		height: 650px;
+		width: 1010px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+/*	#conteneuraliens {
+		display: flex;
+		flex-direction: row;
+		
+		}*/
+
+		h1 {
+			background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			color:transparent;
+			-webkit-background-clip: text;
+			background-clip: text;
+			font-size: 40px;
+
+			text-align: center;
+			font-family: 'spaceage';
+			margin-bottom: 20px;
+		}
+		#conteneuraliens > div {
+	/*	width: 50px;
+	height: 50px;*/
+	/*background-color: blue;*/
+	/*margin: 3px;*/
+	position: absolute;
+	/*background-image: url(hero.png);*/
+	/*background-size: cover;*/
+
+}
+#conteneurship {
+	position: relative;
+	top : -50px;
+}
+#conteneurship > div {
+	width: 100px;
+	height: 50px;
+	background-image: url(hero.png);
+	background-size: cover;
+	position: relative;
+	z-index: 20;
+	/*margin: 100px 3px 3px 3px;*/
+}
+.aliens {
+	width: 40px;
+	height: 20px;
+	/*background-color: blue;*/
+}
+.protectionBlocsClass {
+	width: 100px;
+	height: 50px;
+	position: absolute;
+	top: 200px;
+}
+#conteneurprotection { 
+	position: relative;
+	/*top: 600px;*/
+
+
+}
+</style>
+</head>
+<body>
+	<h1>Space Invaders</h1>
+	<div id="conteneurgeneral">
+		<div id="conteneuraliens" style="position: relative">
+		</div>
+		<div id="conteneurprotection"></div>
+		<div id="conteneurship">
+			<div id="hero" style="position: absolute;"></div>
+		</div>
+		
+	</div>
+	<!-- <script type="text/javascript" src="javAleth.js"></script> -->
+	<script type="text/javascript">
+
+
+		document.addEventListener('DOMContentLoaded', function (){ 
+
+
+			let conteneurAlien = document.getElementById('conteneuraliens');
+			let conteneurGeneral = document.getElementById('conteneurgeneral');
+			let conteneurShip = document.getElementById('conteneurship');
+			let boutonUn = document.getElementById('boutonUn');
+			let conteneurProtection = document.getElementById('conteneurprotection');
+			conteneurAlien.style.left = '10px';
+
+			conteneurAlien.style.top = '10px';
+
+
+			/**************** balancier gauche-droite *****************/
+			// function boutonPlay() {
+
+//pour faire apparaitre les aliens:
+let rows = 5;
+let columns = 10;
+let badGuySpace = 50;
+for (let i = 0; i < rows; i++) {
+	for (let j = 0; j < columns; j++) {
+		let aliens = document.createElement("div");
+		aliens.className = 'aliens';
+		aliens.style.top = badGuySpace * i + "px";
+		aliens.style.left = badGuySpace * j + "px";
+		aliens.style.backgroundImage = 'url(logospacer.gif)';
+		aliens.style.backgroundSize = 'cover';
+		aliens.style.height = '20px'; 
+		aliens.style.width ='40px';
+
+
+		conteneurAlien.appendChild(aliens);
+
+
+	}
+} 
+let aliens = document.getElementsByClassName('aliens'); 
+
+
+/* création blocs de défense*/
+
+
+
+let rowsBlocs = 1;
+let columnsBlocs = 4;
+let protectionBlocsSpace = 200;
+for (let k = 0; k < rowsBlocs; k++) {
+	for (let l = 0; l < columnsBlocs; l++) {
+		let protectionBlocs = document.createElement("div");
+		protectionBlocs.className = 'protectionBlocsClass';
+		protectionBlocs.style.top = 500 + "px";
+		protectionBlocs.style.left = protectionBlocsSpace * l + 180 + "px";
+		protectionBlocs.style.backgroundImage = 'url(protectionintacte.png)';
+		protectionBlocs.style.backgroundSize = 'cover';
+		protectionBlocs.style.height = '50px';
+		protectionBlocs.style.width = '100px';
+		protectionBlocs.isDestroyed= 0;
+
+
+		conteneurProtection.appendChild(protectionBlocs);
+
+
+	}
+} 
+let protectionBlocs = document.getElementsByClassName('protectionBlocsClass');
+
+
+/*balancier aliens*/
+
+var sens = 0;
+var descend = 0
+function MoveRightTheAliens() {
+// var timeoutGoRight = setInterval("conteneurAlien.style.left = parseInt(carreUnLeft) + 122 + 'px'", 1000);
+// var timeoutGoLeft = setTimeout("conteneurAlien.style.left = parseInt(carreUnLeft) - 122 + 'px'", 1000);
+let carreUnTop = parseInt(conteneurAlien.style.top);
+let carreUnLeft = parseInt(conteneurAlien.style.left);
+
+
+			// carreUn = conteneurAlien.style.backgroundColor = "red";
+			if (sens == 0) {
+				// conteneurAlien.style.left = timeoutGoRight;
+				var nextMoveUn = parseInt(carreUnLeft) + 25;
+				
+				if (nextMoveUn >= 585) {
+					sens = 1; 
+					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
+				} else {
+					conteneurAlien.style.left = nextMoveUn + "px";
+				}
+			} else if (sens ==1) {
+				var nextMoveDeux = parseInt(carreUnLeft) - 25;
+				if (nextMoveDeux <= 0) {
+					sens = 0;
+					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
+				} else {
+					conteneurAlien.style.left = parseInt(carreUnLeft) - 25 + "px";
+				}
+
+				
+			}
+			if (parseInt(conteneurAlien.style.top) > 550) {
+				alert('game over!');
+
+			}
+		}
+		setInterval(MoveRightTheAliens, 200);
+
+
+
+
+
+
+
+		let heroShip = document.getElementById('hero');
+		heroShip.style.top = '650px';
+		heroShip.style.left = '500px';
+
+		function moveTheHero(event){
+
+			if (event.code == 'ArrowRight'){
+				heroShip.style.left = (parseInt(heroShip.style.left) + 60 + "px");
+			} else if (event.code == 'ArrowLeft') {
+				heroShip.style.left = parseInt(heroShip.style.left) - 60 + "px";
+			}
+		} 
+
+		document.addEventListener('keydown', moveTheHero);
+
+// /******             misssiles           ****************/
+var intervalMissile;
+
+function tirDeMissile(event) {
+	if (event.code == 'Space') {
+		var missile = document.createElement('div');
+		missile.id = 'divDesmissiles';
+		missile.style.width= '20px';
+		missile.style.height= '28px';
+				// missile.style.backgroundColor = 'black';
+				missile.style.backgroundImage= "url(flamme.png)";
+				missile.style.backgroundSize = "cover";
+				missile.style.position = 'absolute';
+				missile.style.top = '628px';
+				// missile.style.top = setInterval('parseInt(missile.style.top) - 50 + "px"', 1000);
+				missile.style.left = parseInt(heroShip.style.left) + 40 + 'px';;
+
+				conteneurship.appendChild(missile);
+				intervalMissile = setInterval(function() {monteeDuMissile(missile)}, 250);
+
+			}
+
+		}
+		
+		document.addEventListener('keydown', tirDeMissile);
+
+
+
+
+// 		/****** code importé *********/
+
+
+function monteeDuMissile(quelMissile) {
+	
+	
+	quelMissile.style.top = parseInt(quelMissile.style.top) - 25 + "px";
+
+
+	quelMissile.y = parseInt(quelMissile.style.top);
+	quelMissile.height = parseInt(quelMissile.style.height) ;
+	quelMissile.x = parseInt(quelMissile.style.left);
+	quelMissile.width = parseInt(quelMissile.style.width) ;
+
+
+	for (var i = 0; i < aliens.length; i++) {
+		aliens[i].x = parseInt(conteneurAlien.style.left) + parseInt(aliens[i].style.left);
+		aliens[i].y = parseInt(conteneurAlien.style.top) + parseInt(aliens[i].style.top) - 10;
+		aliens[i].height = parseInt(aliens[i].style.height);
+		aliens[i].width = parseInt(aliens[i].style.width);
+/*		console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
+console.log(aliens[i].y,aliens[i].x,aliens[i].height,aliens[i].width,"aliens");*/
+if (isCollide(quelMissile, aliens[i])) {
+	conteneurship.removeChild(quelMissile);
+ 	conteneurAlien.removeChild(aliens[i]);
+	clearInterval(intervalMissile);
+}  
+
+}
+/* pop up end of game - success */
+
+if (aliens.length == 0) {
+// let buttonYouWon = document.createElement("button");
+var txt ;
+	var endOfGame = confirm('Bravo! Vous avez gagné');
+	if (endOfGame == true) {
+txt = "Do you want to try again?"
+	} else {
+		txt = "That's enough!"
+	}
+// document.body.appendChild(buttonYouWon);
+
+}
+
+
+for (var i = 0; i < protectionBlocs.length; i++) {
+	protectionBlocs[i].x = parseInt(protectionBlocs[i].style.left) ;
+	protectionBlocs[i].y = parseInt(protectionBlocs[i].style.top) - 20;
+	protectionBlocs[i].height = parseInt(protectionBlocs[i].style.height);
+	protectionBlocs[i].width = parseInt(protectionBlocs[i].style.width);
+
+
+// console.log(quelMissile.y,quelMissile.x,quelMissile.height,quelMissile.width,"missile");
+// console.log(protectionBlocs[i].y,protectionBlocs[i].x,protectionBlocs[i].height,protectionBlocs[i].width,"bloc");
+if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
+
+	if (protectionBlocs[i].isDestroyed == 0){
+
+		protectionBlocs[i].isDestroyed = 1;
+		protectionBlocs[i].style.backgroundImage= 'url(protectionbroken.png)';
+		protectionBlocs[i].style.backgroundSize = 'cover';
+		conteneurship.removeChild(quelMissile);
+		clearInterval(intervalMissile);
+		
+	} else	if (protectionBlocs[i].isDestroyed == 1) {
+		conteneurProtection.removeChild(protectionBlocs[i]);
+
+		
+	}
+
+
+
+}
+}
+function isCollideBlocs(a, b) {
+	return !(
+		((a.y + a.height) < (b.y)) ||
+		(a.y > (b.y + b.height)) ||
+		((a.x + a.width) < b.x) ||
+		(a.x > (b.x + b.width))
+		);
+}
+
+	
+	};
+
+	function isCollide(a, b) {
+		return !(
+			((a.y + a.height) < (b.y)) ||
+			(a.y > (b.y + b.height)) ||
+			((a.x + a.width) < b.x) ||
+			(a.x > (b.x + b.width))
+			);
+	}
+
+
+
+});//domcontentloaded
+
+</script>
+</body>
+</html>
