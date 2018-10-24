@@ -8,6 +8,10 @@
 	<link rel="stylesheet" type="text/css" href="">
 	<link rel="shortcut icon" href="logospacer.gif">
 	<style type="text/css">
+	@font-face {
+		font-family: 'spaceage';
+		src: url('spaceage.ttf');
+	}
 	body {
 		
 		/*max-width: 1000px;*/
@@ -21,24 +25,37 @@
 		border: solid;
 		background-image: url(starlight.gif);
 		background-size: cover;
-		height: 700px;
+		height: 650px;
 		width: 1010px;
-		/* margin-left: auto;
-		margin-right: auto;*/
+		 margin-left: auto;
+		margin-right: auto;
 	}
 /*	#conteneuraliens {
 		display: flex;
 		flex-direction: row;
 		
 		}*/
+
+		h1 {
+		background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+		background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+		color:transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
+		font-size: 40px;
+		
+		text-align: center;
+		font-family: 'spaceage';
+		margin-bottom: 20px;
+	}
 		#conteneuraliens > div {
 	/*	width: 50px;
 	height: 50px;*/
 	/*background-color: blue;*/
 	/*margin: 3px;*/
 	position: absolute;
-	background-image: url(hero.png);
-	background-size: cover;
+	/*background-image: url(hero.png);*/
+	/*background-size: cover;*/
 
 }
 
@@ -56,14 +73,28 @@
 	height: 20px;
 	/*background-color: blue;*/
 }
+.protectionBlocsClass * {
+	width: 100px;
+	height: 50px;
+	position: absolute;
+	top: 300px;
+}
+.conteneurprotection {
+	position: relative;
+	/*top: 600px;*/
+
+
+}
 </style>
 </head>
 <body>
+	<h1>Space Invaders</h1>
 	<div id="conteneurgeneral">
-		<div id="conteneuraliens" style="position: absolute">
+		<div id="conteneuraliens" style="position: relative">
 		</div>
+		<div id="conteneurprotection"></div>
 		<div id="conteneurship">
-			<div id="hero" style="position: absolute"></div>
+			<div id="hero" style="position: absolute;"></div>
 		</div>
 		<button id="boutonUn" style="height: 30px"></button>
 	</div>
@@ -77,6 +108,7 @@
 			let conteneurGeneral = document.getElementById('conteneurgeneral');
 			let conteneurShip = document.getElementById('conteneurship');
 			let boutonUn = document.getElementById('boutonUn');
+			let conteneurProtection = document.getElementById('conteneurprotection');
 			conteneurAlien.style.left = '10px';
 
 			conteneurAlien.style.top = '10px';
@@ -107,6 +139,33 @@ for (let i = 0; i < rows; i++) {
 let aliens = document.getElementsByClassName('aliens'); 
 
 
+/* création blocs de défense*/
+
+
+
+let rowsBlocs = 1;
+let columnsBlocs = 4;
+let protectionBlocsSpace = 200;
+for (let k = 0; k < rowsBlocs; k++) {
+	for (let l = 0; l < columnsBlocs; l++) {
+		let protectionBlocs = document.createElement("div");
+		protectionBlocs.className = 'protectionBlocsClass';
+		protectionBlocs.style.top = 500 + "px";
+		protectionBlocs.style.left = protectionBlocsSpace * l + 180 + "px";
+		protectionBlocs.style.backgroundImage = 'url(protectionintacte.png)';
+		protectionBlocs.style.backgroundSize = 'cover';
+
+
+		conteneurProtection.appendChild(protectionBlocs);
+
+
+	}
+} 
+let protectionBlocs = document.getElementsByClassName('protectionBlocsClass');
+
+
+/*balancier aliens*/
+
 var sens = 0;
 var descend = 0
 function MoveRightTheAliens() {
@@ -121,7 +180,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 				// conteneurAlien.style.left = timeoutGoRight;
 				var nextMoveUn = parseInt(carreUnLeft) + 25;
 				
-				if (nextMoveUn >= 600) {
+				if (nextMoveUn >= 585) {
 					sens = 1; 
 					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
 				} else {
@@ -133,7 +192,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 					sens = 0;
 					conteneurAlien.style.top = (parseInt(carreUnTop) + 30 + "px");
 				} else {
-					conteneurAlien.style.left = parseInt(carreUnLeft) - 100 + "px";
+					conteneurAlien.style.left = parseInt(carreUnLeft) - 25 + "px";
 				}
 
 				
@@ -143,7 +202,7 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 
 			}
 		}
-		setInterval(MoveRightTheAliens, 2500);
+		setInterval(MoveRightTheAliens, 500);
 
 
 
@@ -161,14 +220,13 @@ let carreUnLeft = parseInt(conteneurAlien.style.left);
 				heroShip.style.left = (parseInt(heroShip.style.left) + 60 + "px");
 			} else if (event.code == 'ArrowLeft') {
 				heroShip.style.left = parseInt(heroShip.style.left) - 60 + "px";
-			}console.log(heroShip)
+			}
 		} 
 
 		document.addEventListener('keydown', moveTheHero);
 
 // /******             misssiles           ****************/
-let canonball;
-canonball = 0;
+
 
 function tirDeMissile(event) {
 	if (event.code == 'Space') {
@@ -180,9 +238,9 @@ function tirDeMissile(event) {
 				missile.style.backgroundImage= "url(flamme.png)";
 				missile.style.backgroundSize = "cover";
 				missile.style.position = 'absolute';
-				missile.style.top = '645px';
+				missile.style.top = '628px';
 				// missile.style.top = setInterval('parseInt(missile.style.top) - 50 + "px"', 1000);
-				missile.style.left = parseInt(heroShip.style.left) + 54 + 'px';;
+				missile.style.left = parseInt(heroShip.style.left) + 40 + 'px';;
 
 				conteneurship.appendChild(missile);
 				setInterval(function() {monteeDuMissile(missile)}, 200);
@@ -201,36 +259,63 @@ function tirDeMissile(event) {
 
 
 function monteeDuMissile(quelMissile) {
+	
 	quelMissile.style.top = parseInt(quelMissile.style.top) - 50 + "px";
+		
+
 	quelMissile.y = quelMissile.style.top;
 	quelMissile.height = quelMissile.style.height ;
 	quelMissile.x = quelMissile.style.left;
 	quelMissile.width = quelMissile.style.width ;
 
-	let aliens = document.getElementsByClassName('aliens');
-	aliens.style.left = badGuySpace * 10 + "px";
-	aliens.style.top = badGuySpace * 5 + "px";
-
-	aliens.x = parseInt(conteneurAlien.style.left) + parseInt(aliens.style.left);
-	aliens.y = parseInt(conteneurAlien.style.top) + parseInt(aliens.style.top);
-	aliens.height = aliens.style.height;
-	aliens.width = aliens.style.width;
-
-
-	if (isCollide(quelMissile, aliens[i])) {
-
-		for (var i = i; i < alien.length; i++) {
-
-			conteneurAlien.removeChild(aliens[i]);
-		}
+	for (var i = 0; i < protectionBlocs.length; i++) {
+		protectionBlocs.length = i;
 	}
-	console.log(alien[i])
+ 	protectionBlocs[0].x = parseInt(conteneurAlien.style.left) + parseInt(protectionBlocs[0].style.left);
+	protectionBlocs[0].y = parseInt(conteneurAlien.style.top) + parseInt(protectionBlocs[0].style.top);
+	protectionBlocs[0].height = protectionBlocs[0].style.height;
+	protectionBlocs[0].width = protectionBlocs[0].style.width;
+// for (var i = i; i < protectionBlocs.length; i++) {
+// 	protectionBlocs[0] = protectionBlocs[0];
+// }
+	if (isCollide(quelMissile, protectionBlocs[0])) { 
+
+	var variableDestroyProtection = 0;	
+		if (variableDestroyProtection == 0){
+			variableDestroyProtection = 1;
+			protectionBlocs[0].style.backgroundImage= 'url(protectionbroken.png)';
+		protectionBlocs[0].style.backgroundSize = 'cover';
+			console.log(variableDestroyProtection);
+		} else if (variableDestroyProtection == 1) {
+			conteneurProtection.removeChild('protectionBlocs[0]');
+			console.log(variableDestroyProtection);
+		}
+		
+	// 	alert("t'y est presque");
+
+	}
+
+	// let aliens = document.getElementsByClassName('aliens');
+	// aliens.style.left = badGuySpace * 10 + "px";
+	// aliens.style.top = badGuySpace * 5 + "px";
+
+	// aliens[0].x = parseInt(conteneurAlien.style.left) + parseInt(aliens.style.left);
+	// aliens.y = parseInt(conteneurAlien.style.top) + parseInt(aliens.style.top);
+	// aliens.height = aliens.style.height;
+	// aliens.width = aliens.style.width;
+
+
+	// if (isCollide(quelMissile, aliens[i])) {
+
+	// 	for (var i = i; i < alien.length; i++) {
+
+	// 		conteneurAlien.removeChild(aliens[i]);
+	// 	}
+	// }
+	// console.log(alien[i])
 		// boucle sur chaque alien - faire remove child plutôt que display none
 		
 	};
-
-		// let aliens = document.getElementsByClassName("aliens");
-
 
 		function isCollide(a, b) {
 			return !(
