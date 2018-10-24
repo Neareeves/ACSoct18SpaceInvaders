@@ -9,5 +9,8 @@ console.log(keyCode);
 }
 
 function perteVie () {
-   if  checkColision.missile
+   if (isCollideBlocs(quelMissile, protectionBlocs[i])) {
+       
+   }
+
 }
