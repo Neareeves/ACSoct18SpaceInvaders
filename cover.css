@@ -6,12 +6,15 @@
 .button{
   padding: 350px;
   text-decoration:none;
+ 
 }
+
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: rgb(245, 20, 170);
   padding: 350px;
+  font-size: 30px;
   text-decoration:none;
 }
 
@@ -21,7 +24,7 @@ a:hover {
 .btn-secondary:focus {
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
-  background-color:#fff;
+  background-color: #fff);
   border: .05rem solid #fff;
   /* padding: 150px; */
 }
@@ -35,6 +38,7 @@ html,
 body {
   height: 100%;
   background-color:black;
+
 }
 
 body {
@@ -46,6 +50,7 @@ body {
   text-align: center;
   font-size: 24px;
   padding: 100px;
+  position: relative;
 }
 
 .cover-container {
@@ -108,9 +113,14 @@ body {
 }
 
 
-/*
- * Footer
- */
-.mastfoot {
-  color: rgba(255, 255, 255, .5);
+
+footer{
+  color: blue;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    text-align: center;
+   
 }
